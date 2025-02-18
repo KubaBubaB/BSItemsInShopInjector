@@ -20,12 +20,11 @@ Simple application that let's you add items from mods to the shop in Crystal Hun
 #### - in case you want to add more items from the mod you previously added items from and you want those *new* items to be the same tier as the already added items, please select all of the items (new and already present). Otherwise old items will be overwritten by new items.
 
 
+## Why make this?
+I searched for a way to easily add items from a mod to the Crystal Hunt (without having to spawn them each time I enter a map), but found none. I created this project, so other people don't have to spend time looking for solution for already solved problem ;) 
 
 
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
 
-
-## Why make this?
-I searched for a way to easily add items from a mod to the Crystal Hunt (without having to spawn them each time I enter a map), but found none. I created this project, so other people don't have to spend time looking for solution for already solved problem ;) 
