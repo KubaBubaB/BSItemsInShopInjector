@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -275,8 +276,8 @@ public class BSItemsApp extends JFrame {
                 }
                 for(File fileInDirectory : Objects.requireNonNull(parentDir.listFiles())){
                     String name = fileInDirectory.getName();
-                    if (name.equals("LootTables")) {
-                        parentDir = fileInDirectory;
+                    if (name.equals("LootTables") || name.equals("Items")) {
+                        parentDir = fileInDirectory.getParentFile();
                         found = true;
                         break outerLoop;
                     }
@@ -292,7 +293,10 @@ public class BSItemsApp extends JFrame {
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            File summaryFile = new File(parentDir, "LootTable_Shop_WeaponRack_T%d.json".formatted(tier));
+            File parentDirToLootTables = parentDir;
+            File summaryFile = new File(Arrays.stream(parentDir.listFiles()).filter((file)-> file
+                            .getName().equals("LootTables")).findFirst()
+                    .orElse(createLootTablesDir(parentDirToLootTables)), "LootTable_Shop_WeaponRack_T%d.json".formatted(tier));
             try (FileWriter writer = new FileWriter(summaryFile)) {
                 writer.write(summaryJson.toString(2));
             }
@@ -307,6 +311,18 @@ public class BSItemsApp extends JFrame {
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    public File createLootTablesDir(File parentDirToLootTables){
+        File ltDir = new File(parentDirToLootTables, "LootTables");
+        if(!ltDir.mkdir()){
+            JOptionPane.showMessageDialog(this,
+                    "Error creating summary file: LootTables directory not found.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+        return ltDir;
     }
 
     public static void main(String[] args) {
